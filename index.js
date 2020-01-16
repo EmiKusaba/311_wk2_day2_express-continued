@@ -1,16 +1,30 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-
+app.use(bodyParser.json());
 const port = process.env.PORT || 4000;
 
 app.use(express.static('public'))
 
 //comments
-const comments = require('./data/comments')
-const contacts = require('./data/contacts')
-const products = require('./data/products')
-const vehicles = require('./data/vehicles')
+let comments = require('./data/comments')
+let contacts = require('./data/contacts')
+let products = require('./data/products')
+let vehicles = require('./data/vehicles')
+
+//routes
+const commentRoute = require("./routes/comments") 
+const contactRoute = require("./routes/comments") 
+const productRoute = require("./routes/comments") 
+const vehicleRoute = require("./routes/comments") 
+
+
+//app.use
+
+app.use(commentRoute)
+app.use(contactRoute)
+app.use(productRoute)
+app.use(vehicleRoute)
 
 app.get("/comments", (req, res) => res.json(comments));
 
@@ -22,6 +36,8 @@ app.get("/comments/:id", (req, res) => {
   res.json(commentFound)
 });
 
+
+
 //contacts
 app.get("/contacts", (req, res) => {
   return res.json(contacts);
@@ -30,25 +46,29 @@ app.get("/contacts", (req, res) => {
 app.get("/contacts/:id", (req, res) => {
   let contactFound = contacts.find(x => x._id == req.params.id)
   // console.log(commentId, commentFound)
-  res.json(contactFound)
+  res.json(contactFound);
 });
 //Create new contact Post
 app.post("/contacts", (req, res) => {
-  let counter = contacts.length + 1
   // let newContact = req.body;
   // contacts.push(newContact)
   // res.json(newContact)
+  let counter = contacts.length;
   let newUser = {
-    _id: counter,
-    name: req.body.name,
-    occupation: req.body.occupation,
-    avatar: req.body.avatar
+    _id: counter+1,
+    body: req.body.body,
+    postId: 1
+
   }
-  contacts.push(newUser);
-  counter = counter + 1
+  contacts.push(newUser)
+  // counter = counter + 1
   res.json(newUser)
   console.log(newUser)
 });
+
+
+
+
 //products
 app.get("/products", (req, res) => {
   return res.json(products);
@@ -59,6 +79,13 @@ app.get("/products/:id", (req, res) => {
   // console.log(commentId, commentFound)
   res.json(productFound)
 });
+//products Post
+app.post("/products", (req, res) => {
+  let newProduct = req.body;
+  products.push(newProduct)
+  res.json(newProduct)
+});
+
 //vehicle
 app.get("/vehicles", (req, res) => {
   return res.json(vehicles);
@@ -69,9 +96,15 @@ app.get("/vehicles/:id", (req, res) => {
   // console.log(commentId, commentFound)
   res.json(vehicleFound)
 });
+//vehicle Post
+app.post("/vehicles", (req, res) => {
+  let newVehicle = req.body;
+  vehicles.push(newVehicle)
+  res.json(newVehicle)
+});
 
 
 
 app.listen(port, () => {
- console.log(`Web server is listening on port ${port}!`);
+  console.log(`Web server is listening on port ${port}!`);
 });
