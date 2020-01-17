@@ -17,7 +17,7 @@ const create = (req, res) => {
   let counter = contacts.length;
   let newUser = {
     _id: counter+1,
-    body: req.body.body,
+    body: req.body,
     postId: 1
 
   }

@@ -10,4 +10,21 @@ const show = (req, res) => {
   res.json(commentFound)
 };
 
+const create = (req, res) => {
+  // let newContact = req.body;
+  // contacts.push(newContact)
+  // res.json(newContact)
+  let counter = comments.length;
+  let newUser = {
+    _id: counter+1,
+    body: req.body.body,
+    postId: 1
+
+  }
+  comments.push(newUser)
+  // counter = counter + 1
+  res.json(newUser)
+  // console.log(newUser)
+};
+
 module.exports = { list, show, create }
