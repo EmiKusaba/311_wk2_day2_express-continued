@@ -10,10 +10,23 @@ const show = (req, res) => {
   res.json(vehicleFound)
 };
 //vehicle Post
-const create = ("/vehicles", (req, res) => {
-  let newVehicle = req.body;
-  vehicles.push(newVehicle)
-  res.json(newVehicle)
-});
+const create = (req, res) => {
+   // let newContact = req.body;
+  // contacts.push(newContact)
+  // res.json(newContact)
+  let counter = vehicles.length;
+  let newUser = {
+    _id: counter+1,
+    imgUrl: req.body.imgUrl,
+    year: req.body.year,
+    make: req.body.make,
+    model: req.body.model
+  }
+  vehicles.push(newUser)
+  // console.log(products)
+  // counter = counter + 1
+  res.json(newUser)
+  // console.log(newUser)
+};
 
 module.exports = { list, show, create }

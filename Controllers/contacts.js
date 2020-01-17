@@ -17,13 +17,14 @@ const create = (req, res) => {
   let counter = contacts.length;
   let newUser = {
     _id: counter+1,
-    body: req.body,
-    postId: 1
+    name: req.name,
+    occupation: req.occupation,
+    avatar:req.avatar,
 
   }
   contacts.push(newUser)
   // counter = counter + 1
-  // res.json(newUser)
+  res.json(newUser)
   // console.log(newUser)
 };
 module.exports = { list, show, create }
